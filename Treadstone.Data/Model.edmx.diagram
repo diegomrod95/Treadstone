@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="addd2aa47142453fbd11c551a4ade554" Name="Diagram1">
+        <EntityTypeShape EntityType="TreadstoneDatabaseModel.Amigos" Width="1.5" PointX="3" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TreadstoneDatabaseModel.Grupo" Width="1.5" PointX="6" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TreadstoneDatabaseModel.GrupoUsuario" Width="1.5" PointX="7.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TreadstoneDatabaseModel.Imagem" Width="1.5" PointX="3.75" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TreadstoneDatabaseModel.Post" Width="1.5" PointX="3" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TreadstoneDatabaseModel.PostImagem" Width="1.5" PointX="5.25" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="TreadstoneDatabaseModel.Usuario" Width="1.5" PointX="0.75" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TreadstoneDatabaseModel.UsuarioImagem" Width="1.5" PointX="6" PointY="2.625" IsExpanded="true" />
+        <AssociationConnector Association="TreadstoneDatabaseModel.FK_Amigos_Amigo_Usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="TreadstoneDatabaseModel.FK_Amigos_Usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="TreadstoneDatabaseModel.FK_Grupo_Imagem" ManuallyRouted="false" />
+        <AssociationConnector Association="TreadstoneDatabaseModel.FK_PostImagem_Imagem" ManuallyRouted="false" />
+        <AssociationConnector Association="TreadstoneDatabaseModel.FK_UsuarioImagem_Imagem" ManuallyRouted="false" />
+        <AssociationConnector Association="TreadstoneDatabaseModel.FK_Post_Usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="TreadstoneDatabaseModel.FK_PostImagem_Post" ManuallyRouted="false" />
+        <AssociationConnector Association="TreadstoneDatabaseModel.FK_UsuarioImagem_Usuario" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

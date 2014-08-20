@@ -1,0 +1,638 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TreadstoneDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Amigos">
+          <Key>
+            <PropertyRef Name="UsuarioId" />
+            <PropertyRef Name="AmigoId" />
+          </Key>
+          <Property Name="UsuarioId" Type="int" Nullable="false" />
+          <Property Name="AmigoId" Type="int" Nullable="false" />
+          <Property Name="Cadastro" Type="datetime" Nullable="false" />
+          <Property Name="Ativo" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Grupo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="1000" />
+          <Property Name="ImagemId" Type="int" />
+          <Property Name="Cadastro" Type="datetime" Nullable="false" />
+          <Property Name="Ativo" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GrupoUsuario">
+          <Key>
+            <PropertyRef Name="GrupoId" />
+            <PropertyRef Name="UsuarioId" />
+          </Key>
+          <Property Name="GrupoId" Type="int" Nullable="false" />
+          <Property Name="UsuarioId" Type="int" Nullable="false" />
+          <Property Name="Admin" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="Cadastro" Type="datetime" Nullable="false" />
+          <Property Name="Ativo" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Imagem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="1000" />
+          <Property Name="Fisico" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="File" Type="varbinary(max)" />
+          <Property Name="Caminho" Type="varchar(max)" />
+          <Property Name="Extensao" Type="varchar" MaxLength="10" />
+          <Property Name="Cadastro" Type="datetime" Nullable="false" />
+          <Property Name="Ativo" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="UsuarioId" Type="int" Nullable="false" />
+          <Property Name="Tipo" Type="int" Nullable="false" />
+          <Property Name="Visibilidade" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="Conteudo" Type="varchar(max)" Nullable="false" />
+          <Property Name="Local" Type="geography" />
+          <Property Name="Cadastro" Type="datetime" Nullable="false" />
+          <Property Name="Ativo" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PostImagem">
+          <Key>
+            <PropertyRef Name="PostId" />
+            <PropertyRef Name="ImagemId" />
+          </Key>
+          <Property Name="PostId" Type="int" Nullable="false" />
+          <Property Name="ImagemId" Type="int" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="500" />
+          <Property Name="Cadastro" Type="datetime" Nullable="false" />
+          <Property Name="Ativo" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Codigo" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Genero" Type="char" MaxLength="1" />
+          <Property Name="Idioma" Type="varchar" MaxLength="255" />
+          <Property Name="Religiao" Type="varchar" MaxLength="255" />
+          <Property Name="Email" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Endereco" Type="varchar" MaxLength="1000" />
+          <Property Name="Telefone" Type="varchar" MaxLength="25" />
+          <Property Name="Celular" Type="varchar" MaxLength="25" />
+          <Property Name="Site" Type="varchar" MaxLength="120" />
+          <Property Name="FotoPerfil" Type="int" Nullable="false" />
+          <Property Name="DataNascimento" Type="datetime" Nullable="false" />
+          <Property Name="Cadastro" Type="datetime" Nullable="false" />
+          <Property Name="Ativo" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UsuarioImagem">
+          <Key>
+            <PropertyRef Name="UsuarioId" />
+            <PropertyRef Name="ImagemId" />
+          </Key>
+          <Property Name="UsuarioId" Type="int" Nullable="false" />
+          <Property Name="ImagemId" Type="int" Nullable="false" />
+          <Property Name="Visibilidade" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="Cadastro" Type="datetime" Nullable="false" />
+          <Property Name="Ativo" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Amigos_Amigo_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Amigos" Type="Self.Amigos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Amigos">
+              <PropertyRef Name="AmigoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Amigos_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Amigos" Type="Self.Amigos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Amigos">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Grupo_Imagem">
+          <End Role="Imagem" Type="Self.Imagem" Multiplicity="0..1" />
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Imagem">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Grupo">
+              <PropertyRef Name="ImagemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Post_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Post" Type="Self.Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostImagem_Imagem">
+          <End Role="Imagem" Type="Self.Imagem" Multiplicity="1" />
+          <End Role="PostImagem" Type="Self.PostImagem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Imagem">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PostImagem">
+              <PropertyRef Name="ImagemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostImagem_Post">
+          <End Role="Post" Type="Self.Post" Multiplicity="1" />
+          <End Role="PostImagem" Type="Self.PostImagem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PostImagem">
+              <PropertyRef Name="PostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsuarioImagem_Imagem">
+          <End Role="Imagem" Type="Self.Imagem" Multiplicity="1" />
+          <End Role="UsuarioImagem" Type="Self.UsuarioImagem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Imagem">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UsuarioImagem">
+              <PropertyRef Name="ImagemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsuarioImagem_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="UsuarioImagem" Type="Self.UsuarioImagem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UsuarioImagem">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TreadstoneDatabaseModelStoreContainer">
+          <EntitySet Name="Amigos" EntityType="Self.Amigos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Grupo" EntityType="Self.Grupo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GrupoUsuario" EntityType="Self.GrupoUsuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Imagem" EntityType="Self.Imagem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Post" EntityType="Self.Post" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PostImagem" EntityType="Self.PostImagem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UsuarioImagem" EntityType="Self.UsuarioImagem" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Amigos_Amigo_Usuario" Association="Self.FK_Amigos_Amigo_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Amigos" EntitySet="Amigos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Amigos_Usuario" Association="Self.FK_Amigos_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Amigos" EntitySet="Amigos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Grupo_Imagem" Association="Self.FK_Grupo_Imagem">
+            <End Role="Imagem" EntitySet="Imagem" />
+            <End Role="Grupo" EntitySet="Grupo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Post_Usuario" Association="Self.FK_Post_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Post" EntitySet="Post" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostImagem_Imagem" Association="Self.FK_PostImagem_Imagem">
+            <End Role="Imagem" EntitySet="Imagem" />
+            <End Role="PostImagem" EntitySet="PostImagem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostImagem_Post" Association="Self.FK_PostImagem_Post">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="PostImagem" EntitySet="PostImagem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsuarioImagem_Imagem" Association="Self.FK_UsuarioImagem_Imagem">
+            <End Role="Imagem" EntitySet="Imagem" />
+            <End Role="UsuarioImagem" EntitySet="UsuarioImagem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsuarioImagem_Usuario" Association="Self.FK_UsuarioImagem_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="UsuarioImagem" EntitySet="UsuarioImagem" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TreadstoneDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Amigos">
+          <Key>
+            <PropertyRef Name="UsuarioId" />
+            <PropertyRef Name="AmigoId" />
+          </Key>
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+          <Property Name="AmigoId" Type="Int32" Nullable="false" />
+          <Property Name="Cadastro" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Ativo" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Amigos_Amigo_Usuario" FromRole="Amigos" ToRole="Usuario" />
+          <NavigationProperty Name="Usuario1" Relationship="Self.FK_Amigos_Usuario" FromRole="Amigos" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Grupo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Nome" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Descricao" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="ImagemId" Type="Int32" />
+          <Property Name="Cadastro" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Ativo" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Imagem" Relationship="Self.FK_Grupo_Imagem" FromRole="Grupo" ToRole="Imagem" />
+        </EntityType>
+        <EntityType Name="GrupoUsuario">
+          <Key>
+            <PropertyRef Name="GrupoId" />
+            <PropertyRef Name="UsuarioId" />
+          </Key>
+          <Property Name="GrupoId" Type="Int32" Nullable="false" />
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+          <Property Name="Admin" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Cadastro" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Ativo" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Imagem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Descricao" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Fisico" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="File" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Caminho" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Extensao" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Cadastro" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Ativo" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Grupo" Relationship="Self.FK_Grupo_Imagem" FromRole="Imagem" ToRole="Grupo" />
+          <NavigationProperty Name="PostImagem" Relationship="Self.FK_PostImagem_Imagem" FromRole="Imagem" ToRole="PostImagem" />
+          <NavigationProperty Name="UsuarioImagem" Relationship="Self.FK_UsuarioImagem_Imagem" FromRole="Imagem" ToRole="UsuarioImagem" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+          <Property Name="Tipo" Type="Int32" Nullable="false" />
+          <Property Name="Visibilidade" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Conteudo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Local" Type="Geography" />
+          <Property Name="Cadastro" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Ativo" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Post_Usuario" FromRole="Post" ToRole="Usuario" />
+          <NavigationProperty Name="PostImagem" Relationship="Self.FK_PostImagem_Post" FromRole="Post" ToRole="PostImagem" />
+        </EntityType>
+        <EntityType Name="PostImagem">
+          <Key>
+            <PropertyRef Name="PostId" />
+            <PropertyRef Name="ImagemId" />
+          </Key>
+          <Property Name="PostId" Type="Int32" Nullable="false" />
+          <Property Name="ImagemId" Type="Int32" Nullable="false" />
+          <Property Name="Descricao" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Cadastro" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Ativo" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Imagem" Relationship="Self.FK_PostImagem_Imagem" FromRole="PostImagem" ToRole="Imagem" />
+          <NavigationProperty Name="Post" Relationship="Self.FK_PostImagem_Post" FromRole="PostImagem" ToRole="Post" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Nome" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Codigo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Genero" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Idioma" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Religiao" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Endereco" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Telefone" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Celular" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Site" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="FotoPerfil" Type="Int32" Nullable="false" />
+          <Property Name="DataNascimento" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Cadastro" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Ativo" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Amigos" Relationship="Self.FK_Amigos_Amigo_Usuario" FromRole="Usuario" ToRole="Amigos" />
+          <NavigationProperty Name="Amigos1" Relationship="Self.FK_Amigos_Usuario" FromRole="Usuario" ToRole="Amigos" />
+          <NavigationProperty Name="Post" Relationship="Self.FK_Post_Usuario" FromRole="Usuario" ToRole="Post" />
+          <NavigationProperty Name="UsuarioImagem" Relationship="Self.FK_UsuarioImagem_Usuario" FromRole="Usuario" ToRole="UsuarioImagem" />
+        </EntityType>
+        <EntityType Name="UsuarioImagem">
+          <Key>
+            <PropertyRef Name="UsuarioId" />
+            <PropertyRef Name="ImagemId" />
+          </Key>
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+          <Property Name="ImagemId" Type="Int32" Nullable="false" />
+          <Property Name="Visibilidade" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Cadastro" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Ativo" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Imagem" Relationship="Self.FK_UsuarioImagem_Imagem" FromRole="UsuarioImagem" ToRole="Imagem" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_UsuarioImagem_Usuario" FromRole="UsuarioImagem" ToRole="Usuario" />
+        </EntityType>
+        <Association Name="FK_Amigos_Amigo_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Amigos" Type="Self.Amigos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Amigos">
+              <PropertyRef Name="AmigoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Amigos_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Amigos" Type="Self.Amigos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Amigos">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Grupo_Imagem">
+          <End Role="Imagem" Type="Self.Imagem" Multiplicity="0..1" />
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Imagem">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Grupo">
+              <PropertyRef Name="ImagemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostImagem_Imagem">
+          <End Role="Imagem" Type="Self.Imagem" Multiplicity="1" />
+          <End Role="PostImagem" Type="Self.PostImagem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Imagem">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PostImagem">
+              <PropertyRef Name="ImagemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsuarioImagem_Imagem">
+          <End Role="Imagem" Type="Self.Imagem" Multiplicity="1" />
+          <End Role="UsuarioImagem" Type="Self.UsuarioImagem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Imagem">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UsuarioImagem">
+              <PropertyRef Name="ImagemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Post_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Post" Type="Self.Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostImagem_Post">
+          <End Role="Post" Type="Self.Post" Multiplicity="1" />
+          <End Role="PostImagem" Type="Self.PostImagem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PostImagem">
+              <PropertyRef Name="PostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsuarioImagem_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="UsuarioImagem" Type="Self.UsuarioImagem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UsuarioImagem">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TreadstoneDatabaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Amigos" EntityType="Self.Amigos" />
+          <EntitySet Name="Grupo" EntityType="Self.Grupo" />
+          <EntitySet Name="GrupoUsuario" EntityType="Self.GrupoUsuario" />
+          <EntitySet Name="Imagem" EntityType="Self.Imagem" />
+          <EntitySet Name="Post" EntityType="Self.Post" />
+          <EntitySet Name="PostImagem" EntityType="Self.PostImagem" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+          <EntitySet Name="UsuarioImagem" EntityType="Self.UsuarioImagem" />
+          <AssociationSet Name="FK_Amigos_Amigo_Usuario" Association="Self.FK_Amigos_Amigo_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Amigos" EntitySet="Amigos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Amigos_Usuario" Association="Self.FK_Amigos_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Amigos" EntitySet="Amigos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Grupo_Imagem" Association="Self.FK_Grupo_Imagem">
+            <End Role="Imagem" EntitySet="Imagem" />
+            <End Role="Grupo" EntitySet="Grupo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostImagem_Imagem" Association="Self.FK_PostImagem_Imagem">
+            <End Role="Imagem" EntitySet="Imagem" />
+            <End Role="PostImagem" EntitySet="PostImagem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsuarioImagem_Imagem" Association="Self.FK_UsuarioImagem_Imagem">
+            <End Role="Imagem" EntitySet="Imagem" />
+            <End Role="UsuarioImagem" EntitySet="UsuarioImagem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Post_Usuario" Association="Self.FK_Post_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Post" EntitySet="Post" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostImagem_Post" Association="Self.FK_PostImagem_Post">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="PostImagem" EntitySet="PostImagem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsuarioImagem_Usuario" Association="Self.FK_UsuarioImagem_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="UsuarioImagem" EntitySet="UsuarioImagem" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TreadstoneDatabaseModelStoreContainer" CdmEntityContainer="TreadstoneDatabaseEntities">
+          <EntitySetMapping Name="Amigos">
+            <EntityTypeMapping TypeName="TreadstoneDatabaseModel.Amigos">
+              <MappingFragment StoreEntitySet="Amigos">
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+                <ScalarProperty Name="AmigoId" ColumnName="AmigoId" />
+                <ScalarProperty Name="Cadastro" ColumnName="Cadastro" />
+                <ScalarProperty Name="Ativo" ColumnName="Ativo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Grupo">
+            <EntityTypeMapping TypeName="TreadstoneDatabaseModel.Grupo">
+              <MappingFragment StoreEntitySet="Grupo">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="ImagemId" ColumnName="ImagemId" />
+                <ScalarProperty Name="Cadastro" ColumnName="Cadastro" />
+                <ScalarProperty Name="Ativo" ColumnName="Ativo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GrupoUsuario">
+            <EntityTypeMapping TypeName="TreadstoneDatabaseModel.GrupoUsuario">
+              <MappingFragment StoreEntitySet="GrupoUsuario">
+                <ScalarProperty Name="GrupoId" ColumnName="GrupoId" />
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+                <ScalarProperty Name="Admin" ColumnName="Admin" />
+                <ScalarProperty Name="Cadastro" ColumnName="Cadastro" />
+                <ScalarProperty Name="Ativo" ColumnName="Ativo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Imagem">
+            <EntityTypeMapping TypeName="TreadstoneDatabaseModel.Imagem">
+              <MappingFragment StoreEntitySet="Imagem">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Fisico" ColumnName="Fisico" />
+                <ScalarProperty Name="File" ColumnName="File" />
+                <ScalarProperty Name="Caminho" ColumnName="Caminho" />
+                <ScalarProperty Name="Extensao" ColumnName="Extensao" />
+                <ScalarProperty Name="Cadastro" ColumnName="Cadastro" />
+                <ScalarProperty Name="Ativo" ColumnName="Ativo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Post">
+            <EntityTypeMapping TypeName="TreadstoneDatabaseModel.Post">
+              <MappingFragment StoreEntitySet="Post">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Visibilidade" ColumnName="Visibilidade" />
+                <ScalarProperty Name="Conteudo" ColumnName="Conteudo" />
+                <ScalarProperty Name="Local" ColumnName="Local" />
+                <ScalarProperty Name="Cadastro" ColumnName="Cadastro" />
+                <ScalarProperty Name="Ativo" ColumnName="Ativo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PostImagem">
+            <EntityTypeMapping TypeName="TreadstoneDatabaseModel.PostImagem">
+              <MappingFragment StoreEntitySet="PostImagem">
+                <ScalarProperty Name="PostId" ColumnName="PostId" />
+                <ScalarProperty Name="ImagemId" ColumnName="ImagemId" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Cadastro" ColumnName="Cadastro" />
+                <ScalarProperty Name="Ativo" ColumnName="Ativo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="TreadstoneDatabaseModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Genero" ColumnName="Genero" />
+                <ScalarProperty Name="Idioma" ColumnName="Idioma" />
+                <ScalarProperty Name="Religiao" ColumnName="Religiao" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Endereco" ColumnName="Endereco" />
+                <ScalarProperty Name="Telefone" ColumnName="Telefone" />
+                <ScalarProperty Name="Celular" ColumnName="Celular" />
+                <ScalarProperty Name="Site" ColumnName="Site" />
+                <ScalarProperty Name="FotoPerfil" ColumnName="FotoPerfil" />
+                <ScalarProperty Name="DataNascimento" ColumnName="DataNascimento" />
+                <ScalarProperty Name="Cadastro" ColumnName="Cadastro" />
+                <ScalarProperty Name="Ativo" ColumnName="Ativo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsuarioImagem">
+            <EntityTypeMapping TypeName="TreadstoneDatabaseModel.UsuarioImagem">
+              <MappingFragment StoreEntitySet="UsuarioImagem">
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+                <ScalarProperty Name="ImagemId" ColumnName="ImagemId" />
+                <ScalarProperty Name="Visibilidade" ColumnName="Visibilidade" />
+                <ScalarProperty Name="Cadastro" ColumnName="Cadastro" />
+                <ScalarProperty Name="Ativo" ColumnName="Ativo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
