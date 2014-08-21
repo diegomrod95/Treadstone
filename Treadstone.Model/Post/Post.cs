@@ -7,16 +7,11 @@ using System.Threading.Tasks;
 namespace Treadstone.Model {
     
     [Serializable]
-    public class Usuario : Entidade {
+    public class Post : Entidade {
         
         public Int32 Id { get; set; }
+        public Usuario UsuarioRef { get; set; }
+        // Todo:
 
-        public IList<Post> Posts { get; set; }
-        // TODO:
-
-        public virtual void AddPost(Post post) {
-            post.UsuarioRef = this;
-            Posts.Add(post);
-        }
     }
 }

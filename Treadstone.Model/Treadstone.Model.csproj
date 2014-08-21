@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entidade.cs" />
+    <Compile Include="Post\Post.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Usuario\IUsuarioRepository.cs" />
     <Compile Include="Usuario\Usuario.cs" />
